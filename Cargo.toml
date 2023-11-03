@@ -37,7 +37,7 @@ rocksdb7_ = []
 
 [dependencies]
 libc = "0.2"
-librocksdb-sys = { path = "librocksdb-sys", version = "0.13.0" }
+librocksdb-sys = { path = "librocksdb-sys" }
 serde = { version = "1", features = [ "derive" ], optional = true }
 
 [dev-dependencies]
