@@ -77,6 +77,7 @@ impl Cache {
     /// The latter is generally preferable, and picking the larger of
     /// block size and meta data block size is a reasonable choice that
     /// errs towards this side.
+    #[cfg(feature = "rocksdb7_")]
     pub fn new_hyper_clock_cache(capacity: size_t, estimated_entry_charge: size_t) -> Cache {
         Cache(Arc::new(CacheWrapper {
             inner: NonNull::new(unsafe {
@@ -637,6 +638,7 @@ impl BlockBasedOptions {
     /// Use the specified checksum type.
     /// Newly created table files will be protected with this checksum type.
     /// Old table files will still be readable, even though they have different checksum type.
+    #[cfg(feature = "rocksdb7_")]
     pub fn set_checksum_type(&mut self, checksum_type: ChecksumType) {
         unsafe {
             ffi::rocksdb_block_based_options_set_checksum(self.inner, checksum_type as c_char);
@@ -659,6 +661,7 @@ impl BlockBasedOptions {
     /// opts.set_bloom_filter(10.0, true);
     /// opts.set_optimize_filters_for_memory(true);
     /// ```
+    #[cfg(feature = "rocksdb7_")]
     pub fn set_optimize_filters_for_memory(&mut self, v: bool) {
         unsafe {
             ffi::rocksdb_block_based_options_set_optimize_filters_for_memory(
@@ -765,6 +768,7 @@ pub enum LogLevel {
 impl Options {
     /// Constructs the DBOptions and ColumnFamilyDescriptors by loading the
     /// latest RocksDB options file stored in the specified rocksdb database.
+    #[cfg(feature = "rocksdb7_")]
     pub fn load_latest<P: AsRef<Path>>(
         path: P,
         env: Env,
@@ -2491,6 +2495,7 @@ impl Options {
     ///
     /// opts.set_plain_table_factory(&factory_opts);
     /// ```
+    #[cfg(feature = "rocksdb7_")]
     pub fn set_plain_table_factory(&mut self, options: &PlainTableFactoryOptions) {
         unsafe {
             ffi::rocksdb_options_set_plain_table_factory(
@@ -3519,6 +3524,7 @@ impl ReadOptions {
     /// Used for sequential reads and internal automatic prefetching.
     ///
     /// Default: `false`
+    #[cfg(feature = "rocksdb7_")]
     pub fn set_async_io(&mut self, v: bool) {
         unsafe {
             ffi::rocksdb_readoptions_set_async_io(self.inner, c_uchar::from(v));

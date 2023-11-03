@@ -920,6 +920,7 @@ impl<T: ThreadMode, D: DBInner> DBCommon<T, D> {
     /// If atomic flush is not enabled, it is equivalent to calling flush_cf multiple times.
     /// If atomic flush is enabled, it will flush all column families specified in `cfs` up to the latest sequence
     /// number at the time when flush is requested.
+    #[cfg(feature = "rocksdb7_")]
     pub fn flush_cfs_opt(
         &self,
         cfs: &[&impl AsColumnFamilyRef],
@@ -1173,6 +1174,7 @@ impl<T: ThreadMode, D: DBInner> DBCommon<T, D> {
     /// Return the values associated with the given keys and the specified column family
     /// where internally the read requests are processed in batch if block-based table
     /// SST format is used.  It is a more optimized version of multi_get_cf.
+    #[cfg(feature = "rocksdb7_")]
     pub fn batched_multi_get_cf<'a, K, I>(
         &self,
         cf: &impl AsColumnFamilyRef,
@@ -1189,6 +1191,7 @@ impl<T: ThreadMode, D: DBInner> DBCommon<T, D> {
     /// Return the values associated with the given keys and the specified column family
     /// where internally the read requests are processed in batch if block-based table
     /// SST format is used. It is a more optimized version of multi_get_cf_opt.
+    #[cfg(feature = "rocksdb7_")]
     pub fn batched_multi_get_cf_opt<'a, K, I>(
         &self,
         cf: &impl AsColumnFamilyRef,
@@ -2008,6 +2011,7 @@ impl<T: ThreadMode, D: DBInner> DBCommon<T, D> {
     }
 
     /// Obtains the LSM-tree meta data of the default column family of the DB
+    #[cfg(feature = "rocksdb7_")]
     pub fn get_column_family_metadata(&self) -> ColumnFamilyMetaData {
         unsafe {
             let ptr = ffi::rocksdb_get_column_family_metadata(self.inner.inner());
@@ -2027,6 +2031,7 @@ impl<T: ThreadMode, D: DBInner> DBCommon<T, D> {
     }
 
     /// Obtains the LSM-tree meta data of the specified column family of the DB
+    #[cfg(feature = "rocksdb7_")]
     pub fn get_column_family_metadata_cf(
         &self,
         cf: &impl AsColumnFamilyRef,

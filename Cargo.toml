@@ -33,6 +33,7 @@ bzip2 = ["librocksdb-sys/bzip2"]
 rtti = ["librocksdb-sys/rtti"]
 multi-threaded-cf = []
 serde1 = ["serde"]
+rocksdb7_ = []
 
 [dependencies]
 libc = "0.2"

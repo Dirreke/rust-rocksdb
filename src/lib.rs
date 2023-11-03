@@ -75,6 +75,7 @@
 #[macro_use]
 mod ffi_util;
 
+#[cfg(feature = "rocksdb7_")]
 pub mod backup;
 pub mod checkpoint;
 mod column_family;
@@ -94,6 +95,8 @@ pub mod properties;
 mod slice_transform;
 mod snapshot;
 mod sst_file_writer;
+
+#[cfg(feature = "rocksdb7_")]
 mod transactions;
 mod write_batch;
 
@@ -128,11 +131,14 @@ pub use crate::{
     slice_transform::SliceTransform,
     snapshot::{Snapshot, SnapshotWithThreadMode},
     sst_file_writer::SstFileWriter,
-    transactions::{
-        OptimisticTransactionDB, OptimisticTransactionOptions, Transaction, TransactionDB,
-        TransactionDBOptions, TransactionOptions,
-    },
+    
     write_batch::{WriteBatch, WriteBatchIterator, WriteBatchWithTransaction},
+};
+
+#[cfg(feature = "rocksdb7_")]
+pub use crate::transactions::{
+    OptimisticTransactionDB, OptimisticTransactionOptions, Transaction, TransactionDB,
+    TransactionDBOptions, TransactionOptions,
 };
 
 use librocksdb_sys as ffi;
