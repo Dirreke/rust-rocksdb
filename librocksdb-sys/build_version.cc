@@ -3,26 +3,13 @@
 #include <memory>
 
 #include "rocksdb/version.h"
-#include "rocksdb/utilities/object_registry.h"
 #include "util/string_util.h"
 
 // The build script may replace these values with real values based
 // on whether or not GIT is available and the platform settings
-static const std::string rocksdb_build_git_sha  = "cb7a5e02edeb883193eb5b4901d5943f58e9add9";
-static const std::string rocksdb_build_git_tag = "rocksdb_build_git_tag:v8.6.7";
-#define HAS_GIT_CHANGES 0
-#if HAS_GIT_CHANGES == 0
-// If HAS_GIT_CHANGES is 0, the GIT date is used.
-// Use the time the branch/tag was last modified
-static const std::string rocksdb_build_date = "rocksdb_build_date:2023-09-26 15:51:19";
-#else
-// If HAS_GIT_CHANGES is > 0, the branch/tag has modifications.
-// Use the time the build was created.
-static const std::string rocksdb_build_date = "rocksdb_build_date:2023-09-01 20:58:39";
-#endif
-
-std::unordered_map<std::string, ROCKSDB_NAMESPACE::RegistrarFunc> ROCKSDB_NAMESPACE::ObjectRegistry::builtins_ = {};
-
+static const std::string rocksdb_build_git_sha  = "rocksdb_build_git_sha:da11a59034584ea2d0911268b8136e5249d6b692";
+static const std::string rocksdb_build_git_tag = "rocksdb_build_git_tag:6.29.5";
+static const std::string rocksdb_build_date = "rocksdb_build_date:2022-03-29 19:54:19";
 extern "C" bool RocksDbIOUringEnable() {
   return true;
 }
@@ -54,9 +41,9 @@ const std::unordered_map<std::string, std::string>& GetRocksBuildProperties() {
 }
 
 std::string GetRocksVersionAsString(bool with_patch) {
-  std::string version = std::to_string(ROCKSDB_MAJOR) + "." + std::to_string(ROCKSDB_MINOR);
+  std::string version = ToString(ROCKSDB_MAJOR) + "." + ToString(ROCKSDB_MINOR);
   if (with_patch) {
-    return version + "." + std::to_string(ROCKSDB_PATCH);
+    return version + "." + ToString(ROCKSDB_PATCH);
   } else {
     return version;
  }

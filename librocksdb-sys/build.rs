@@ -231,7 +231,7 @@ fn build_rocksdb() {
 
     if target.contains("msvc") {
         config.flag("-EHsc");
-        config.flag("-std:c++17");
+        // config.flag("-std:c++17");
     } else {
         config.flag(&cxx_standard());
         // matches the flags in CMakeLists.txt from rocksdb
@@ -253,7 +253,7 @@ fn build_rocksdb() {
     config.file("build_version.cc");
 
     config.cpp(true);
-    config.flag_if_supported("-std=c++17");
+    // config.flag_if_supported("-std=c++17");
     config.compile("librocksdb.a");
 }
 
@@ -310,7 +310,7 @@ fn try_to_find_and_link_lib(lib_name: &str) -> bool {
 }
 
 fn cxx_standard() -> String {
-    env::var("ROCKSDB_CXX_STD").map_or("-std=c++17".to_owned(), |cxx_std| {
+    env::var("ROCKSDB_CXX_STD").map_or("-std=c++11".to_owned(), |cxx_std| {
         if !cxx_std.starts_with("-std=") {
             format!("-std={cxx_std}")
         } else {
